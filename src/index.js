@@ -96,6 +96,7 @@ function showSolved(reply, hinted) {
             } else {
               score += idiom.length;
             }
+            prependIdiomLink(idiom, true);
           }
           document.getElementById('score').innerText = score;
         }

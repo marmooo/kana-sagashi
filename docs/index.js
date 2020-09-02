@@ -8,7 +8,8 @@ function findMeiroIndex(n){for(var x=0;x<size;x++){for(var y=0;y<size;y++){if(me
 return-1;}
 function prependIdiomLink(idiom,correct){var a=document.createElement('a');a.innerText=idiom;a.href='https://www.google.com/search?q='+idiom+'とは';a.target='_blank';a.rel='noopener noreferer';if(correct){a.className='btn btn-light m-1';}else{a.className='btn btn-secondary m-1';}
 solvedPanel.prepend(a);}
-function showSolved(reply,hinted){var solvedPanel=document.getElementById('solvedPanel');var trs=document.getElementById('meiro').children;var j=0;var k=0;for(var i=0;i<counter;i++){var idiom=idioms[j];if(!processed[i]){if(reply[i]==idiom[k]){if(k==idiom.length-1){var pos=i-k+1;if(processed[pos]){var idx=findMeiroIndex(pos);var td=trs[Math.floor(idx/size)].children[idx%size];if(td.classList.contains('table-secondary')){score+=1;}else{score+=idiom.length;}}
+function showSolved(reply,hinted){var solvedPanel=document.getElementById('solvedPanel');var trs=document.getElementById('meiro').children;var j=0;var k=0;for(var i=0;i<counter;i++){var idiom=idioms[j];if(!processed[i]){if(reply[i]==idiom[k]){if(k==idiom.length-1){var pos=i-k+1;if(processed[pos]){var idx=findMeiroIndex(pos);var td=trs[Math.floor(idx/size)].children[idx%size];if(td.classList.contains('table-secondary')){score+=1;}else{score+=idiom.length;}
+prependIdiomLink(idiom,true);}
 document.getElementById('score').innerText=score;}
 processed[i]=true;}else{if(hinted){var pos=i-k+1;var idx=findMeiroIndex(pos);var td=trs[Math.floor(idx/size)].children[idx%size];td.className='';td.classList.add('table-secondary');}else{prependIdiomLink(idiom,false);var pos=i-k;for(var l=pos;l<pos+idiom.length;l++){processed[l]=true;var idx=findMeiroIndex(l+1);var td=trs[Math.floor(idx/size)].children[idx%size];td.className='';td.classList.add('table-secondary');}}}}
 if(k==idiom.length-1){j+=1;k=0;}else{k+=1;}}}
