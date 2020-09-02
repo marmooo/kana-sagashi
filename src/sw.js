@@ -1,4 +1,4 @@
-var CACHE_NAME = '2020-09-01 12:00';
+var CACHE_NAME = '2020-09-02 19:00';
 var urlsToCache = [
   '/kana-sagashi/',
   '/kana-sagashi/index.js',
