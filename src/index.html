@@ -37,17 +37,19 @@
     </style>
   </head>
   <body>
-    <nav id="header" class="navbar navbar-expand navbar-light">
-      <div class="container">
-        <a class="navbar-brand" href="/kanji-meiro/">
-          カタカナ<ruby>熟語<rp>(</rp><rt>じゅくご</rt><rp>)</rp></ruby>さがし
-        </a>
-        <div class="navbar-nav">
-          <button title="ダークモード切替" onclick="toggleDarkMode()" class="ml-2 close">🌓</button>
+    <header id="header">
+      <nav class="navbar navbar-expand navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/kanji-meiro/">
+            カタカナ<ruby>熟語<rp>(</rp><rt>じゅくご</rt><rp>)</rp></ruby>さがし
+          </a>
+          <div class="navbar-nav">
+            <button title="ダークモード切替" onclick="toggleDarkMode()" class="ml-2 close">🌓</button>
+          </div>
         </div>
-      </div>
-    </nav>
-    <div class="container text-center">
+      </nav>
+    </header>
+    <main class="container text-center">
       <noscript>
         <div class="alert alert-warning">JavaScript を ON にしてください</div>
       </noscript>
@@ -78,14 +80,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <footer class="pt-4 alert text-center">
       <div>
         <a class="px-1" href="/">Home</a>
         <a class="px-1" href="/terms/">Terms</a>
         <a class="px-1" href="https://github.com/marmooo/kana-sagashi">Contact</a>
       </div>
-      <div class="text-muted">(c) <a href="https://github.com/marmooo">marmooo</a>. All Rights Reserved.</div>
+      <div class="text-muted">&copy; <a href="https://github.com/marmooo">marmooo</a>. All Rights Reserved.</div>
     </footer>
     <script src="index.js"></script>
   </body>
