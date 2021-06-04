@@ -2,7 +2,7 @@ var CACHE_NAME = '2021-05-29 22:00';
 var urlsToCache = [
   '/kana-sagashi/',
   '/kana-sagashi/index.js',
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css',
 ];
 
 self.addEventListener('install', function(event) {
