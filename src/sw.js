@@ -1,7 +1,8 @@
-var CACHE_NAME = '2021-06-18 08:45';
+var CACHE_NAME = '2021-06-19 19:20';
 var urlsToCache = [
   '/kana-sagashi/',
   '/kana-sagashi/index.js',
+  '/kana-sagashi/favicon/original.svg',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css',
 ];
 
