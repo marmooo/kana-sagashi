@@ -1,9 +1,9 @@
-var CACHE_NAME = '2021-10-06 08:40';
+var CACHE_NAME = '2021-10-08 00:19';
 var urlsToCache = [
   "/kana-sagashi/",
   "/kana-sagashi/index.js",
   "/kana-sagashi/favicon/original.svg",
-  "https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css",
+  "https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css",
 ];
 
 self.addEventListener("install", function (event) {
