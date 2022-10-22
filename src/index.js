@@ -411,6 +411,7 @@ function generateGame() {
     meiroNode.appendChild(tr);
     for (let y = 0; y < size; y++) {
       const td = document.createElement("td");
+      td.setAttribute("role", "button");
       td.textContent = words[getRandomInt(0, words.length)];
       tr.appendChild(td);
       td.onclick = () => {
@@ -437,7 +438,7 @@ function generateGame() {
 
 function resizeFontSize(node) {
   const meiroSize = document.getElementById("masu").offsetWidth;
-  const margin = 1.2;  // 小さすぎると overflow で表示が崩れる
+  const margin = 1.2; // 小さすぎると overflow で表示が崩れる
   const padding = remSize * 8;
   const border = 9;
   const fontSize = (meiroSize - padding - border) / 8 / margin;
