@@ -1,5 +1,4 @@
 const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
-const tmpCanvas = document.createElement("canvas");
 const size = 8;
 const problemNum = 8;
 const meiro = new Array(12);
