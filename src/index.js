@@ -1,14 +1,17 @@
+import { createWorker } from "https://cdn.jsdelivr.net/npm/emoji-particle@0.0.4/+esm";
+
 const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
 const size = 8;
 const problemNum = 8;
 const meiro = new Array(12);
+const emojiParticle = initEmojiParticle();
 let score = 0;
 let counter = 0;
 let processed;
 let idioms = [];
-const words =
-  "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポァィゥェォッャュー"
-    .split("");
+const words = Array.from(
+  "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポァィゥェォッャュー",
+);
 loadConfig();
 
 function loadConfig() {
@@ -39,6 +42,30 @@ function shuffle(array) {
     [array[k], array[i - 1]] = [array[i - 1], array[k]];
   }
   return array;
+}
+
+function initEmojiParticle() {
+  const canvas = document.createElement("canvas");
+  Object.assign(canvas.style, {
+    position: "fixed",
+    pointerEvents: "none",
+    top: "0px",
+    left: "0px",
+  });
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight;
+  document.body.prepend(canvas);
+
+  const offscreen = canvas.transferControlToOffscreen();
+  const worker = createWorker();
+  worker.postMessage({ type: "init", canvas: offscreen }, [offscreen]);
+
+  globalThis.addEventListener("resize", () => {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    worker.postMessage({ type: "resize", width, height });
+  });
+  return { canvas, offscreen, worker };
 }
 
 function calcReply() {
@@ -88,6 +115,7 @@ function showSolved(reply, hinted) {
   const trs = document.getElementById("meiro").children;
   let j = 0;
   let k = 0;
+  let currScore = 0;
   for (let i = 0; i < counter; i++) {
     const idiom = idioms[j];
     if (!processed[i]) {
@@ -98,9 +126,9 @@ function showSolved(reply, hinted) {
             const idx = findMeiroIndex(pos);
             const td = trs[Math.floor(idx / size)].children[idx % size];
             if (td.classList.contains("table-secondary")) {
-              score += 1;
+              currScore += 1;
             } else {
-              score += idiom.length;
+              currScore += idiom.length;
             }
             prependIdiomLink(idiom, true);
           }
@@ -134,6 +162,18 @@ function showSolved(reply, hinted) {
       k += 1;
     }
   }
+  for (let i = 0; i < Math.floor(currScore / 3); i++) {
+    emojiParticle.worker.postMessage({
+      type: "spawn",
+      options: {
+        particleType: "popcorn",
+        originX: Math.random() * emojiParticle.canvas.width,
+        originY: Math.random() * emojiParticle.canvas.height,
+      },
+    });
+  }
+  score += currScore;
+  document.getElementById("score").textContent = score;
 }
 
 function showHint() {
@@ -198,18 +238,11 @@ function setNeighborText(trs, x, y, direction, text, isAnswer) {
   }
 }
 
-function generateRandomText(text, isAnswer) {
+function randomizeText(text, isAnswer) {
   if (isAnswer) {
     const first = text[0];
     for (let i = 0; i < 5; i++) { // どうしても熟語ができてしまうケースがあるため回数打ち切り
       text = first + words[getRandomInt(0, words.length)];
-      if (!includeIdiom(text)) return text;
-    }
-  } else {
-    for (let i = 0; i < 5; i++) { // どうしても熟語ができてしまうケースがあるため回数打ち切り
-      for (let j = 0; j < 2; j++) {
-        text[j] = words[getRandomInt(0, words.length)];
-      }
       if (!includeIdiom(text)) return text;
     }
   }
@@ -227,7 +260,7 @@ function includeIdiom(text) {
 function strictNeighbor(trs, x, y, direction, isAnswer) {
   let text = getNeighborText(trs, x, y, direction);
   if (text.length == 2) { // 解答ノードを含まない時
-    text = generateRandomText(text, isAnswer);
+    text = randomizeText(text, isAnswer);
     setNeighborText(trs, x, y, direction, text, isAnswer);
   }
 }
